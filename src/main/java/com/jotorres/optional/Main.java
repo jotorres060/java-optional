@@ -1,6 +1,7 @@
 package com.jotorres.optional;
 
 import java.util.Optional;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -17,5 +18,18 @@ public class Main {
 
         Optional<String> greeting = Optional.of("Hello everyone");
         greeting.ifPresent((message) -> System.out.println(message.concat(", I'm Jorge")));
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("User:");
+        Optional<String> userOpt = Optional.ofNullable(scanner.nextLine())
+                .filter((user) -> !username.isEmpty());
+        String user = userOpt.orElseThrow(() -> new IllegalArgumentException("User is required"));
+        System.out.println(user);
+
+        String formattedName = Optional.of("    JORGE    ")
+                .map(String::trim)
+                .map(String::toLowerCase)
+                .orElse("guest");
+        System.out.println(formattedName);
     }
 }
